@@ -2,8 +2,8 @@
   "name": "hilink",
   "title": "hilink",
   "id": "jid1-a35cANSJwdzMjw",
-  "description": "a basic add-on",
-  "author": "",
+  "description": "Addon for HiLink Modem with web-based control panel",
+  "author": "Adit Cahya Ramadhan",
   "license": "MPL 2.0",
   "version": "0.1"
 }
