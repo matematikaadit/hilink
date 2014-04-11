@@ -5,6 +5,9 @@ var statusContainer = document.getElementById("status");
 
 homeLink.onclick = function(e) {
     e.preventDefault();
-
-    self.port.emit("openHome", "");
+    self.port.emit("openHome", null);
 };
+
+self.port.on("changeStatus", function(status){
+    statusContainer.innerHTML = status;
+});
