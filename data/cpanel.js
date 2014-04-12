@@ -35,3 +35,21 @@ homeLink.onclick = function(e) {
     e.preventDefault();
     self.port.emit("openHome", null);
 };
+
+connectLink.onclick = dialFunc(1);
+disconnectLink.onclick = dialFunc(0);
+
+function dialFunc(action){
+    return function(e) {
+        e.preventDefault();
+        var xml = action2XML(action);
+        self.port.emit("dial", xml);
+        self.port.emit("checkStatus", null);
+    };
+};
+
+var action2XML = function(action) {
+    var actionXML = '<?xml version="1.0" encoding="UTF-8"?>' +
+            '<request><Action>' + action + '</Action></request>';
+    return actionXML;
+};
