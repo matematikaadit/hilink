@@ -3,16 +3,47 @@ var connectLink = document.getElementById("connect");
 var disconnectLink = document.getElementById("disconnect");
 var statusContainer = document.getElementById("status");
 
-self.port.on("changeStatus", function(status){
-    var parser = new DOMParser();
-    var xml = parser.parseFromString(status, "application/xml");
-    var elements = xml.getElementsByTagName("ConnectionStatus");
-    var statusString = "";
-    if (elements) {
-        statusString = num2Status(elements[0].innerHTML);
-    }
-    statusContainer.innerHTML = statusString;
+disconnectLink._sibling = connectLink;
+connectLink._sibling = disconnectLink;
+
+self.port.on("changeStatus", function(xmlstr){
+    var status = xmlstr2status(xmlstr);
+    statusContainer.innerHTML = status;
+    updateLink(status);
 });
+
+function updateLink(status) {
+    switch(status){
+        case "connected":
+        case "connecting":
+            unhide(disconnectLink);
+            break;
+        case "disconnected":
+        case "disconnecting":
+            unhide(connectLink);
+            break;
+        default:
+            unhide(connectLink);
+            break;
+    }
+}
+
+function unhide(link) {
+    link.classList.remove("hidden");
+    link._sibling.classList.add("hidden");
+}
+
+function xmlstr2status(xmlstr){
+    var parser = new DOMParser();
+    var xml = parser.parseFromString(xmlstr, "application/xml");
+    var elements = xml.getElementsByTagName("ConnectionStatus");
+    var status = "";
+    if (elements) {
+        status = num2Status(elements[0].innerHTML);
+    }
+    return status;
+
+}
 
 var num2Status = function(text) {
     var statusMap = {
@@ -36,15 +67,16 @@ homeLink.onclick = function(e) {
     self.port.emit("openHome", null);
 };
 
-connectLink.onclick = dialFunc(1);
-disconnectLink.onclick = dialFunc(0);
+connectLink.onclick = dialFunction(1);
+disconnectLink.onclick = dialFunction(0);
 
-function dialFunc(action){
+function dialFunction(action){
     return function(e) {
         e.preventDefault();
         var xml = action2XML(action);
         self.port.emit("dial", xml);
         self.port.emit("checkStatus", null);
+        unhide(this._sibling);
     };
 };
 
