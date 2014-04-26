@@ -4,6 +4,16 @@ Addon for HiLink modem with web-based control panel.
 
 ![Screenshot](hilink-addon-screenshot.png)
 
+Installasi
+----------
+
+Download [hilink.xpi](https://github.com/matematikaadit/hilink/releases/download/v0.1/hilink.xpi) ke firefox anda. (Release yang lain bisa dilihat di halaman [Releases](https://github.com/matematikaadit/hilink/releases/))
+
+Penggunaan
+----------
+
+Klik icon hilink di pojok kiri bawah.
+
 License
 -------
 
