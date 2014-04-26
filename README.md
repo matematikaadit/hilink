@@ -2,6 +2,8 @@
 
 Addon for HiLink modem with web-based control panel.
 
+![Screenshot](hilink-addon-screenshot.png)
+
 License
 -------
 
